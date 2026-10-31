@@ -1,0 +1,20 @@
+/*
+ * Part 1: design tokens.
+ *
+ * Go through every spec image first and collect the repeated values (surface colours, the text
+ * colours, borders, the tomato / basil / cheese / ocean / plum palette, radii, shadows, spacing)
+ * into CSS custom properties here, e.g.
+ *
+ *   :root {
+ *     --bg-panel: #fffbf5;
+ *     --text-secondary: rgba(42, 27, 16, 0.68);
+ *     --radius-md: 10px;
+ *   }
+ *
+ * Then use var(--...) in the component stylesheets instead of repeating raw values.
+ *
+ * Fonts are already loaded in main.tsx:
+ *   'Fredoka' 500/600 (display: brand, panel titles, tabs, big totals)
+ *   'Nunito'  400/600/700/800 (everything else)
+ *   'DM Mono' 400/500 (numbers, prices, tickets, times)
+ */

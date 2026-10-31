@@ -1,0 +1,41 @@
+{
+  "name": "slice-rush-challenge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "start": "vite --open",
+    "dev": "concurrently -k -n api,web -c magenta,cyan \"npm:server\" \"npm:start\"",
+    "dev:stress": "concurrently -k -n api,web -c magenta,cyan \"npm:server:stress\" \"npm:start\"",
+    "server": "node server/index.mjs",
+    "server:stress": "STRESS=1 node server/index.mjs",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && vite build",
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "@fontsource/fredoka": "^5.3.0",
+    "@fontsource/nunito": "^5.3.0",
+    "@fontsource/dm-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^10.0.6",
+    "jsdom": "^30.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

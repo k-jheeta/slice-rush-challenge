@@ -1,0 +1,14 @@
+/* Part 1: style to match specs/ shared: panel chrome, panel title, count badge, chips + chip counts, empty state, category colours (.cat-*) for the pizza icon (05, 06, 08a, 13, 14). See the comment at the bottom of this file. */
+
+/*
+ * The provided <PizzaIcon> reads these custom properties (with fallbacks):
+ *   --pizza-crust, --pizza-sauce, --pizza-cheese, --pizza-topping
+ * Give each category class (.cat-classic, .cat-veggie, .cat-spicy, .cat-special) its own values,
+ * plus a --cat colour for the category dot on the chips:
+ *
+ *   category   --cat      --pizza-sauce        --pizza-topping
+ *   classic    #e4472f    (default #e4472f)    #c62f1c
+ *   veggie     #2a9d5c    #4fae6b              #2a9d5c
+ *   spicy      #c8401c    #c8401c              #7a1d0b
+ *   special    #8b4ab8    #f3d9a4              #8b4ab8
+ */

@@ -1,0 +1,18 @@
+/*
+ * Part 1: global base styles - reset, body background/typography, form controls inheriting
+ * font/colour, the `.num` utility (DM Mono, tabular numbers) used on every number, a visible
+ * :focus-visible outline, and a prefers-reduced-motion rule.
+ * Body: background #f6eee2, text #2a1b10, Nunito 13px / line-height 1.4.
+ */
+
+/* Provided: hides content visually but keeps it for screen readers */
+.visually-hidden {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
