@@ -31,3 +31,21 @@ jobs:
       - name: Run tests
         run: npm test -- --run
         continue-on-error: true # remove once Part 2 is done
+
+  tag:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Create and push tag
+        run: |
+          TAG="$(date -u +%Y%m%d%H%M%S%3NZ)"
+          echo "Tagging $GITHUB_SHA as $TAG"
+          git tag "$TAG"
+          git push origin "$TAG"
