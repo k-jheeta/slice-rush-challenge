@@ -32,9 +32,8 @@ jobs:
         run: npm test -- --run
         continue-on-error: true # remove once Part 2 is done
 
-
   # tag:
-  #   needs: check
+  #   needs: [check, test]
   #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
   #   runs-on: ubuntu-latest
   #   permissions:
@@ -46,10 +45,18 @@ jobs:
   #   steps:
   #     - name: Check out code
   #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
 
   #     - name: Create and push tag
   #       run: |
-  #         TAG="$(date -u +%Y%m%d%H%M%S%3N)"
-  #         echo "Tagging $GITHUB_SHA as $TAG"
+  #         LATEST="$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)"
+  #         if [ -z "$LATEST" ]; then
+  #           TAG="v0.1.0"
+  #         else
+  #           IFS=. read -r MAJOR MINOR PATCH <<< "${LATEST#v}"
+  #           TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
+  #         fi
+  #         echo "Latest: ${LATEST:-none}. Tagging $GITHUB_SHA as $TAG"
   #         git tag "$TAG"
   #         git push origin "$TAG"
