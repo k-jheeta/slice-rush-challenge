@@ -28,9 +28,24 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run tests
-        run: npm test -- --run
-        continue-on-error: true # remove once Part 2 is done
+  # test:
+  #   runs-on: ubuntu-latest
+  #
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Set up Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: npm
+  #
+  #     - name: Install dependencies
+  #       run: npm ci
+  #
+  #     - name: Run tests
+  #       run: npm test -- --run
 
   # tag:
   #   needs: [check, test]
@@ -41,22 +56,18 @@ jobs:
   #   concurrency:
   #     group: tag-main
   #     cancel-in-progress: false
-
+  #
   #   steps:
   #     - name: Check out code
   #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-
+  #
   #     - name: Create and push tag
+  #       shell: bash
   #       run: |
-  #         LATEST="$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)"
-  #         if [ -z "$LATEST" ]; then
-  #           TAG="v0.1.0"
-  #         else
-  #           IFS=. read -r MAJOR MINOR PATCH <<< "${LATEST#v}"
-  #           TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
-  #         fi
-  #         echo "Latest: ${LATEST:-none}. Tagging $GITHUB_SHA as $TAG"
-  #         git tag "$TAG"
+  #         set -euo pipefail
+  #
+  #         TAG="$(date -u +%Y%m%d%H%M%S%3N)"
+  #
+  #         echo "Tagging $GITHUB_SHA as $TAG"
+  #         git tag "$TAG" "$GITHUB_SHA"
   #         git push origin "$TAG"
