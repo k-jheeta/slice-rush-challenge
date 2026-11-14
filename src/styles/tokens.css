@@ -21,32 +21,32 @@
  :root {
     --pill-border-radius: 999px;
     
-    --border-strong: rgba(97, 58, 25, 0.22); /* #613a19 */ /* 3 */
-    --border: rgba(97, 58, 25, 0.12); /* #613a19 */ /* 11 */
-    --divider: rgba(97, 58, 25, 0.08); /* #613a19 */ /* 3 */
+    --border-strong: rgba(97, 58, 25, 0.22);
+    --border: rgba(97, 58, 25, 0.12);
+    --divider: rgba(97, 58, 25, 0.08);
 
-    --tomato-red: rgba(228, 71, 47, 1); /* #e4472f hsl(8, 77, 54) */ /* 16 */
-    --tomato-red-ring: rgba(228, 71, 47, 0.28); /* #e4472f */ /* 2 */
-    --tomato-red-soft: rgba(228, 71, 47, 0.12); /* #e4472f */ /* 5 */
+    --tomato-red: rgba(228, 71, 47, 1);
+    --tomato-red-ring: rgba(228, 71, 47, 0.28);
+    --tomato-red-soft: rgba(228, 71, 47, 0.12);
 
-    --chilli-red: rgba(200, 64, 28, 1); /* #c8401c hsl(13, 75, 45) */ /* 2 */
+    --chilli-red: rgba(200, 64, 28, 1);
 
-    --invalid: rgba(214, 59, 42, 1); /* #d63b2a hsl(6, 68, 50)*/ /* 8 */
+    --invalid: rgba(214, 59, 42, 1);
 
-    --text-primary: rgba(42, 27, 16, 1); /* #2a1b10 hsl(25, 45, 11) */ /* 11 */
-    --text-secondary: rgba(42, 27, 16, 0.68); /* #2a1b10 */ /* 11 */
-    --text-subtle: rgba(42, 27, 16, 0.46); /* #2a1b10 */ /* 17 */
+    --text-primary: rgba(42, 27, 16, 1);
+    --text-secondary: rgba(42, 27, 16, 0.68);
+    --text-subtle: rgba(42, 27, 16, 0.46);
 
-    --cheese-yellow: rgba(240, 169, 27, 1); /* f0a91b hsl(40, 88, 52) */ /* 12 */
-    --cheese-yellow-text: rgba(154, 98, 0, 1); /* #9a6200 hsl(38, 100, 30) */ /* 5 */
+    --cheese-yellow: rgba(240, 169, 27, 1);
+    --cheese-yellow-text: rgba(154, 98, 0, 1);
 
-    --white: rgba(255, 255, 255, 1); /* 11 */
-    --background: rgba(255, 251, 245, 1); /* #fffbf5 hsl(36, 100, 98) */ /* 6 */
-    --background-secondary: rgba(248, 240, 229, 1); /* #f8f0e5 hsl(35, 58, 94) */ /* 7 */
-    --background-subtle: rgba(120, 72, 32, 0.08); /* #784820 hsl(27, 58, 30) */ /* 7 */
+    --white: rgba(255, 255, 255, 1);
+    --background: rgba(255, 251, 245, 1);
+    --background-secondary: rgba(248, 240, 229, 1);
+    --background-subtle: rgba(120, 72, 32, 0.08);
 
-    --ocean-blue: rgba(47, 120, 208, 1); /* #2f78d0 hsl(213, 63, 50) */ /* 6 */
+    --ocean-blue: rgba(47, 120, 208, 1);
    
-    --basil-green: rgba(42, 157, 92, 1); /* 2a9d5c hsl(146, 58, 39)*/ /* 11 */
-    --basil-green-soft: rgba(42, 157, 92, 0.14); /* 2a9d5c */ /* 2 */
+    --basil-green: rgba(42, 157, 92, 1);
+    --basil-green-soft: rgba(42, 157, 92, 0.14);
 }
