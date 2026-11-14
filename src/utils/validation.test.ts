@@ -105,7 +105,16 @@ describe('successful validation', () => {
     const r = validateDraft(draft({ customer: '  Alex ', quantity: ' 3 ', postcode: 'w1d3qf' }), MARG, 24);
     expect(r).toEqual({
       ok: true,
-      request: { pizzaId: 'margherita', customer: 'Alex', size: 'M', crust: 'CLASSIC', quantity: 3, fulfilment: 'DELIVERY', postcode: 'W1D 3QF', tipPercent: 10 },
+      request: {
+        pizzaId: 'margherita',
+        customer: 'Alex',
+        size: 'M',
+        crust: 'CLASSIC',
+        quantity: 3,
+        fulfilment: 'DELIVERY',
+        postcode: 'W1D 3QF',
+        tipPercent: 10,
+      },
       quote: { unit: 950, subtotal: 2850, discount: 950, food: 1900, deliveryFee: 299, tip: 190, total: 2389 },
     });
   });
@@ -116,6 +125,10 @@ describe('successful validation', () => {
   });
 
   test('reports every field at once', () => {
-    expect(Object.keys(errorsOf(draft({ customer: '', quantity: '', postcode: '' })))).toEqual(['customer', 'quantity', 'postcode']);
+    expect(Object.keys(errorsOf(draft({ customer: '', quantity: '', postcode: '' })))).toEqual([
+      'customer',
+      'quantity',
+      'postcode',
+    ]);
   });
 });

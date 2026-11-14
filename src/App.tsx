@@ -11,7 +11,18 @@ import { OrderForm } from './components/OrderForm';
 import { StatusBadge } from './components/StatusBadge';
 import { Toasts, type Toast } from './components/Toasts';
 import { TopBar } from './components/TopBar';
-import { ACTIVITY, DRIVERS, FAVOURITE_IDS, MENU, MENU_BY_ID, NOW, ORDERS, STOCK, TAKINGS, pizza } from './__test__/fixtures';
+import {
+  ACTIVITY,
+  DRIVERS,
+  FAVOURITE_IDS,
+  MENU,
+  MENU_BY_ID,
+  NOW,
+  ORDERS,
+  STOCK,
+  TAKINGS,
+  pizza,
+} from './__test__/fixtures';
 import type { MenuSection } from './utils/menu';
 import './styles/buttons.css';
 import './App.css';
@@ -29,12 +40,35 @@ export function App() {
     <div className="app">
       <TopBar connection="live" takings={18245} branch="Soho" />
       <main className="workspace">
-        <MenuPanel menuCount={MENU.length} sections={SECTIONS} stock={STOCK} favouriteIds={FAVOURITE_IDS} selectedId="margherita" flashes={{ 'basil-instinct': 'down', inferno: 'up' }} />
-        <KitchenBoard tab="tickets" orders={ORDERS} drivers={DRIVERS} activity={ACTIVITY} menuById={MENU_BY_ID} takings={TAKINGS} now={NOW} />
+        <MenuPanel
+          menuCount={MENU.length}
+          sections={SECTIONS}
+          stock={STOCK}
+          favouriteIds={FAVOURITE_IDS}
+          selectedId="margherita"
+          flashes={{ 'basil-instinct': 'down', inferno: 'up' }}
+        />
+        <KitchenBoard
+          tab="tickets"
+          orders={ORDERS}
+          drivers={DRIVERS}
+          activity={ACTIVITY}
+          menuById={MENU_BY_ID}
+          takings={TAKINGS}
+          now={NOW}
+        />
         <OrderForm
           pizza={MARG}
           level={STOCK.margherita}
-          fields={{ customer: 'Kam', size: 'M', crust: 'CLASSIC', quantity: '3', fulfilment: 'DELIVERY', postcode: 'E1 6AN', tipPercent: 10 }}
+          fields={{
+            customer: 'Kam',
+            size: 'M',
+            crust: 'CLASSIC',
+            quantity: '3',
+            fulfilment: 'DELIVERY',
+            postcode: 'E1 6AN',
+            tipPercent: 10,
+          }}
           quote={{ unit: 950, subtotal: 2850, discount: 950, food: 1900, deliveryFee: 299, tip: 190, total: 2389 }}
           sizePrices={CLASSIC_PRICES}
         />
@@ -44,12 +78,30 @@ export function App() {
 }
 
 const TOASTS: Toast[] = [
-  { id: 1, variant: 'success', title: '#0109 sent to the kitchen', message: '3× Pepperoni Party for Kam', duration: 5000 },
+  {
+    id: 1,
+    variant: 'success',
+    title: '#0109 sent to the kitchen',
+    message: '3× Pepperoni Party for Kam',
+    duration: 5000,
+  },
   { id: 2, variant: 'info', title: '#0108 is on the way', message: 'Heading to E1 6AN', duration: 5000 },
   { id: 3, variant: 'error', title: 'Could not cancel', message: 'Too late - it is already on the way!', duration: 0 },
 ];
 
-function Item({ title, spec, width, height, children }: { title: string; spec: string; width?: number; height?: number; children: ReactNode }) {
+function Item({
+  title,
+  spec,
+  width,
+  height,
+  children,
+}: {
+  title: string;
+  spec: string;
+  width?: number;
+  height?: number;
+  children: ReactNode;
+}) {
   return (
     <figure className="gallery-item">
       <figcaption>
@@ -62,7 +114,8 @@ function Item({ title, spec, width, height, children }: { title: string; spec: s
   );
 }
 
-const byIds = (ids: string[]) => ORDERS.filter((o) => ids.includes(o.id)).sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
+const byIds = (ids: string[]) =>
+  ORDERS.filter((o) => ids.includes(o.id)).sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
 
 function Gallery() {
   return (
@@ -80,7 +133,12 @@ function Gallery() {
       <Item title="Top bar: reconnecting + branch menu open" spec="04-topbar-states.png" width={960} height={200}>
         <TopBar connection="reconnecting" takings={0} branch="Shoreditch" menuOpen />
       </Item>
-      <Item title="Menu: search results (hover a row, focus the input)" spec="07-menu-states.png" width={300} height={380}>
+      <Item
+        title="Menu: search results (hover a row, focus the input)"
+        spec="07-menu-states.png"
+        width={300}
+        height={380}
+      >
         <MenuPanel
           menuCount={MENU.length}
           sections={[{ id: 'menu', title: 'Results', items: [pizza('nduja-ninja'), pizza('hot-honey')] }]}
@@ -101,29 +159,61 @@ function Gallery() {
         />
       </Item>
       <Item title="Menu: empty search" spec="08b-menu-empty.png" width={300} height={340}>
-        <MenuPanel menuCount={MENU.length} sections={[]} stock={STOCK} favouriteIds={FAVOURITE_IDS} selectedId="margherita" query="anchovy" />
+        <MenuPanel
+          menuCount={MENU.length}
+          sections={[]}
+          stock={STOCK}
+          favouriteIds={FAVOURITE_IDS}
+          selectedId="margherita"
+          query="anchovy"
+        />
       </Item>
       <Item title="Order form: errors" spec="11-form-errors.png" width={336} height={828}>
         <OrderForm
           pizza={MARG}
           level={STOCK.margherita}
-          fields={{ customer: 'R2-D2', size: 'L', crust: 'STUFFED', quantity: '0', fulfilment: 'DELIVERY', postcode: 'e10 5np', tipPercent: 10 }}
+          fields={{
+            customer: 'R2-D2',
+            size: 'L',
+            crust: 'STUFFED',
+            quantity: '0',
+            fulfilment: 'DELIVERY',
+            postcode: 'e10 5np',
+            tipPercent: 10,
+          }}
           quote={{ unit: 1440, subtotal: 0, discount: 0, food: 0, deliveryFee: 299, tip: 0, total: 299 }}
           sizePrices={{ S: 960, M: 1150, L: 1440 }}
-          errors={{ customer: "Use letters, spaces and ' - . only", quantity: 'Add at least 1 pizza', postcode: "Sorry, we don't deliver to E10 yet" }}
+          errors={{
+            customer: "Use letters, spaces and ' - . only",
+            quantity: 'Add at least 1 pizza',
+            postcode: "Sorry, we don't deliver to E10 yet",
+          }}
         />
       </Item>
       <Item title="Order form: collection, sending" spec="12-form-collection-submitting.png" width={336} height={828}>
         <OrderForm
           pizza={MARG}
           level={STOCK.margherita}
-          fields={{ customer: 'Kam', size: 'M', crust: 'THIN', quantity: '2', fulfilment: 'COLLECTION', postcode: '', tipPercent: 0 }}
+          fields={{
+            customer: 'Kam',
+            size: 'M',
+            crust: 'THIN',
+            quantity: '2',
+            fulfilment: 'COLLECTION',
+            postcode: '',
+            tipPercent: 0,
+          }}
           quote={{ unit: 950, subtotal: 1900, discount: 0, food: 1900, deliveryFee: 0, tip: 0, total: 1900 }}
           sizePrices={CLASSIC_PRICES}
           submitting
         />
       </Item>
-      <Item title="Board: Active filter, sorted by ETA, one cancelling" spec="15-board-filtered-sorted.png" width={784} height={320}>
+      <Item
+        title="Board: Active filter, sorted by ETA, one cancelling"
+        spec="15-board-filtered-sorted.png"
+        width={784}
+        height={320}
+      >
         <KitchenBoard
           tab="tickets"
           orders={byIds(['ord-5', 'ord-8', 'ord-7', 'ord-6'])}
@@ -138,16 +228,48 @@ function Gallery() {
         />
       </Item>
       <Item title="Board: drivers" spec="16-board-drivers.png" width={784} height={420}>
-        <KitchenBoard tab="drivers" orders={ORDERS} drivers={DRIVERS} activity={ACTIVITY} menuById={MENU_BY_ID} takings={TAKINGS} now={NOW} />
+        <KitchenBoard
+          tab="drivers"
+          orders={ORDERS}
+          drivers={DRIVERS}
+          activity={ACTIVITY}
+          menuById={MENU_BY_ID}
+          takings={TAKINGS}
+          now={NOW}
+        />
       </Item>
       <Item title="Board: takings" spec="17-board-takings.png" width={784} height={280}>
-        <KitchenBoard tab="takings" orders={ORDERS} drivers={DRIVERS} activity={ACTIVITY} menuById={MENU_BY_ID} takings={TAKINGS} now={NOW} />
+        <KitchenBoard
+          tab="takings"
+          orders={ORDERS}
+          drivers={DRIVERS}
+          activity={ACTIVITY}
+          menuById={MENU_BY_ID}
+          takings={TAKINGS}
+          now={NOW}
+        />
       </Item>
       <Item title="Board: activity" spec="18-board-activity.png" width={784} height={360}>
-        <KitchenBoard tab="activity" orders={ORDERS} drivers={DRIVERS} activity={ACTIVITY} menuById={MENU_BY_ID} takings={TAKINGS} now={NOW} />
+        <KitchenBoard
+          tab="activity"
+          orders={ORDERS}
+          drivers={DRIVERS}
+          activity={ACTIVITY}
+          menuById={MENU_BY_ID}
+          takings={TAKINGS}
+          now={NOW}
+        />
       </Item>
       <Item title="Board: no tickets" spec="13-board-dimensions.png" width={784} height={300}>
-        <KitchenBoard tab="tickets" orders={[]} drivers={DRIVERS} activity={ACTIVITY} menuById={MENU_BY_ID} takings={TAKINGS} now={NOW} />
+        <KitchenBoard
+          tab="tickets"
+          orders={[]}
+          drivers={DRIVERS}
+          activity={ACTIVITY}
+          menuById={MENU_BY_ID}
+          takings={TAKINGS}
+          now={NOW}
+        />
       </Item>
       <Item title="Status badges" spec="19-status-badges.png">
         <div style={{ display: 'flex', gap: 14 }}>
@@ -160,10 +282,22 @@ function Gallery() {
         <ConfirmDialog title="That's a big order!" confirmLabel="Fire up the ovens">
           <p>Orders over £150 or 10+ pizzas need a quick double-check.</p>
           <dl className="summary-list">
-            <div><dt>Customer</dt><dd>Office Party</dd></div>
-            <div><dt>Pizza</dt><dd>12× Pepperoni Party (Large)</dd></div>
-            <div><dt>Delivering to</dt><dd className="num">EC1A 1BB</dd></div>
-            <div><dt>Total</dt><dd className="num emphasis">£179.30</dd></div>
+            <div>
+              <dt>Customer</dt>
+              <dd>Office Party</dd>
+            </div>
+            <div>
+              <dt>Pizza</dt>
+              <dd>12× Pepperoni Party (Large)</dd>
+            </div>
+            <div>
+              <dt>Delivering to</dt>
+              <dd className="num">EC1A 1BB</dd>
+            </div>
+            <div>
+              <dt>Total</dt>
+              <dd className="num emphasis">£179.30</dd>
+            </div>
           </dl>
         </ConfirmDialog>
       </Item>

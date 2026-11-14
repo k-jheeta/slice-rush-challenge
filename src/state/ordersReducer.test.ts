@@ -44,7 +44,10 @@ describe('optimistic submit', () => {
 
   test('submitFailed does not remove an order the server already confirmed', () => {
     const s1 = ordersReducer(loaded(), { type: 'submitted', order: pending });
-    const s2 = ordersReducer(s1, { type: 'upserted', order: { ...pending, status: 'QUEUED', updatedAt: pending.updatedAt } });
+    const s2 = ordersReducer(s1, {
+      type: 'upserted',
+      order: { ...pending, status: 'QUEUED', updatedAt: pending.updatedAt },
+    });
     expect(ordersReducer(s2, { type: 'submitFailed', id: 'c1' })).toBe(s2);
   });
 
@@ -108,9 +111,26 @@ describe('cancel flags', () => {
 
 describe('selectors', () => {
   test('selectOrders returns orders in id order', () => {
-    expect(selectOrders(loaded()).map((o) => o.id)).toEqual(['ord-8', 'ord-7', 'ord-6', 'ord-5', 'ord-4', 'ord-3', 'ord-2', 'ord-1']);
+    expect(selectOrders(loaded()).map((o) => o.id)).toEqual([
+      'ord-8',
+      'ord-7',
+      'ord-6',
+      'ord-5',
+      'ord-4',
+      'ord-3',
+      'ord-2',
+      'ord-1',
+    ]);
   });
   test('countByStatus', () => {
-    expect(countByStatus(ORDERS)).toEqual({ PENDING: 0, QUEUED: 1, IN_OVEN: 1, ON_THE_WAY: 2, DONE: 2, CANCELLED: 1, REJECTED: 1 });
+    expect(countByStatus(ORDERS)).toEqual({
+      PENDING: 0,
+      QUEUED: 1,
+      IN_OVEN: 1,
+      ON_THE_WAY: 2,
+      DONE: 2,
+      CANCELLED: 1,
+      REJECTED: 1,
+    });
   });
 });

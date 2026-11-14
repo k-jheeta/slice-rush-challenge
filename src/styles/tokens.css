@@ -18,35 +18,35 @@
  *   'Nunito'  400/600/700/800 (everything else)
  *   'DM Mono' 400/500 (numbers, prices, tickets, times)
  */
- :root {
-    --pill-border-radius: 999px;
-    
-    --border-strong: rgba(97, 58, 25, 0.22);
-    --border: rgba(97, 58, 25, 0.12);
-    --divider: rgba(97, 58, 25, 0.08);
+:root {
+  --pill-border-radius: 999px;
 
-    --tomato-red: rgba(228, 71, 47, 1);
-    --tomato-red-ring: rgba(228, 71, 47, 0.28);
-    --tomato-red-soft: rgba(228, 71, 47, 0.12);
+  --border-strong: rgba(97, 58, 25, 0.22);
+  --border: rgba(97, 58, 25, 0.12);
+  --divider: rgba(97, 58, 25, 0.08);
 
-    --chilli-red: rgba(200, 64, 28, 1);
+  --tomato-red: rgba(228, 71, 47, 1);
+  --tomato-red-ring: rgba(228, 71, 47, 0.28);
+  --tomato-red-soft: rgba(228, 71, 47, 0.12);
 
-    --invalid: rgba(214, 59, 42, 1);
+  --chilli-red: rgba(200, 64, 28, 1);
 
-    --text-primary: rgba(42, 27, 16, 1);
-    --text-secondary: rgba(42, 27, 16, 0.68);
-    --text-subtle: rgba(42, 27, 16, 0.46);
+  --invalid: rgba(214, 59, 42, 1);
 
-    --cheese-yellow: rgba(240, 169, 27, 1);
-    --cheese-yellow-text: rgba(154, 98, 0, 1);
+  --text-primary: rgba(42, 27, 16, 1);
+  --text-secondary: rgba(42, 27, 16, 0.68);
+  --text-subtle: rgba(42, 27, 16, 0.46);
 
-    --white: rgba(255, 255, 255, 1);
-    --background: rgba(255, 251, 245, 1);
-    --background-secondary: rgba(248, 240, 229, 1);
-    --background-subtle: rgba(120, 72, 32, 0.08);
+  --cheese-yellow: rgba(240, 169, 27, 1);
+  --cheese-yellow-text: rgba(154, 98, 0, 1);
 
-    --ocean-blue: rgba(47, 120, 208, 1);
-   
-    --basil-green: rgba(42, 157, 92, 1);
-    --basil-green-soft: rgba(42, 157, 92, 0.14);
+  --white: rgba(255, 255, 255, 1);
+  --background: rgba(255, 251, 245, 1);
+  --background-secondary: rgba(248, 240, 229, 1);
+  --background-subtle: rgba(120, 72, 32, 0.08);
+
+  --ocean-blue: rgba(47, 120, 208, 1);
+
+  --basil-green: rgba(42, 157, 92, 1);
+  --basil-green-soft: rgba(42, 157, 92, 0.14);
 }

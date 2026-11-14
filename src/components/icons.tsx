@@ -148,7 +148,14 @@ export const InboxIcon = (p: IconProps) => (
 
 /** Logo: a slice of pizza */
 export const SliceIcon = (p: IconProps) => (
-  <svg width={p.size ?? 20} height={p.size ?? 20} viewBox="0 0 20 20" aria-hidden="true" focusable="false" className={p.className}>
+  <svg
+    width={p.size ?? 20}
+    height={p.size ?? 20}
+    viewBox="0 0 20 20"
+    aria-hidden="true"
+    focusable="false"
+    className={p.className}
+  >
     <path d="M10 18 2.6 4.4C7.3 1.9 12.7 1.9 17.4 4.4Z" fill="#ffd36b" />
     <path d="M2.6 4.4C7.3 1.9 12.7 1.9 17.4 4.4l-.9 1.7C12.3 3.9 7.7 3.9 3.5 6.1Z" fill="#d98b3a" />
     <circle cx="8" cy="8" r="1.4" fill="#e4472f" />
@@ -160,7 +167,14 @@ export const SliceIcon = (p: IconProps) => (
 /** A whole pizza, coloured with CSS custom properties so each category can look different */
 export function PizzaIcon({ size = 40, className = '' }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true" focusable="false" className={`pizza-icon ${className}`}>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+      focusable="false"
+      className={`pizza-icon ${className}`}
+    >
       <circle cx="20" cy="20" r="19" fill="var(--pizza-crust, #e0a458)" />
       <circle cx="20" cy="20" r="15.5" fill="var(--pizza-sauce, #e4472f)" />
       <circle cx="20" cy="20" r="13.5" fill="var(--pizza-cheese, #ffe1a1)" />
@@ -171,7 +185,12 @@ export function PizzaIcon({ size = 40, className = '' }: { size?: number; classN
         <circle cx="16" cy="26" r="2.2" />
         <circle cx="20.5" cy="19.5" r="1.8" />
       </g>
-      <path d="M20 1v38M1 20h38M6.6 6.6l26.8 26.8M33.4 6.6 6.6 33.4" stroke="var(--pizza-crust, #e0a458)" strokeWidth="0.8" opacity="0.5" />
+      <path
+        d="M20 1v38M1 20h38M6.6 6.6l26.8 26.8M33.4 6.6 6.6 33.4"
+        stroke="var(--pizza-crust, #e0a458)"
+        strokeWidth="0.8"
+        opacity="0.5"
+      />
     </svg>
   );
 }
