@@ -15,7 +15,12 @@ export interface SegmentedControlProps<T extends string | number> {
 }
 
 /** A radio group rendered as a segmented button bar. Part 3: add onChange + arrow-key support. */
-export function SegmentedControl<T extends string | number>({ label, options, value, size = 'md' }: SegmentedControlProps<T>) {
+export function SegmentedControl<T extends string | number>({
+  label,
+  options,
+  value,
+  size = 'md',
+}: SegmentedControlProps<T>) {
   return (
     <div className="segmented-field">
       <span className="field-label" aria-hidden="true">
@@ -23,7 +28,13 @@ export function SegmentedControl<T extends string | number>({ label, options, va
       </span>
       <div className={`segmented segmented-${size}`} role="radiogroup" aria-label={label}>
         {options.map((option) => (
-          <button key={option.value} type="button" role="radio" aria-checked={option.value === value} className="segment">
+          <button
+            key={option.value}
+            type="button"
+            role="radio"
+            aria-checked={option.value === value}
+            className="segment"
+          >
             <span className="segment-label">{option.label}</span>
             {option.hint && <span className="segment-hint num">{option.hint}</span>}
           </button>

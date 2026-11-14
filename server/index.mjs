@@ -48,14 +48,18 @@ function priceOrder(pizza, { size, crust, quantity, fulfilment, tipPercent }) {
 }
 
 function normalisePostcode(raw) {
-  const compact = String(raw ?? '').toUpperCase().replace(/\s+/g, '');
+  const compact = String(raw ?? '')
+    .toUpperCase()
+    .replace(/\s+/g, '');
   if (!/^[A-Z]{1,2}[0-9][A-Z0-9]?[0-9][A-Z]{2}$/.test(compact)) return null;
   return `${compact.slice(0, -3)} ${compact.slice(-3)}`;
 }
 
 function inDeliveryArea(postcode) {
   const outward = postcode.split(' ')[0];
-  return DELIVERY_AREAS.some((area) => outward === area || (outward.startsWith(area) && /[A-Z]/.test(outward[area.length])));
+  return DELIVERY_AREAS.some(
+    (area) => outward === area || (outward.startsWith(area) && /[A-Z]/.test(outward[area.length])),
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -70,16 +74,40 @@ const MENU = [
   ['basil-instinct', 'Basil Instinct', ['pesto', 'burrata', 'cherry tomatoes', 'basil'], 'VEGGIE', 1400, 0, true],
   ['truffle-shuffle', 'Truffle Shuffle', ['white base', 'truffle', 'potato', 'rosemary'], 'SPECIAL', 1650, 0, true],
   ['inferno', 'Inferno', ['tomato', 'scotch bonnet', 'jalapeños', 'spicy salami'], 'SPICY', 1400, 3, false],
-  ['pineapple-peace', 'Pineapple Peace Treaty', ['tomato', 'ham', 'pineapple', 'chilli jam'], 'CLASSIC', 1250, 1, false],
+  [
+    'pineapple-peace',
+    'Pineapple Peace Treaty',
+    ['tomato', 'ham', 'pineapple', 'chilli jam'],
+    'CLASSIC',
+    1250,
+    1,
+    false,
+  ],
   ['meat-feast', 'Meat Feast', ['tomato', 'sausage', 'pepperoni', 'smoked ham', 'beef'], 'CLASSIC', 1550, 0, false],
   ['green-machine', 'Green Machine', ['pesto', 'broccoli', 'courgette', 'spinach', 'feta'], 'VEGGIE', 1300, 0, true],
-  ['bbq-smokehouse', 'BBQ Smokehouse', ['bbq sauce', 'pulled pork', 'red onion', 'smoked cheddar'], 'SPECIAL', 1500, 0, false],
+  [
+    'bbq-smokehouse',
+    'BBQ Smokehouse',
+    ['bbq sauce', 'pulled pork', 'red onion', 'smoked cheddar'],
+    'SPECIAL',
+    1500,
+    0,
+    false,
+  ],
   ['nduja-ninja', "'Nduja Ninja", ['tomato', 'nduja', 'ricotta', 'honey'], 'SPICY', 1450, 2, false],
   ['four-cheese', 'Four Cheese Please', ['mozzarella', 'gorgonzola', 'parmesan', 'fontina'], 'VEGGIE', 1350, 0, true],
   ['the-big-dipper', 'The Big Dipper', ['tomato', 'meatballs', 'garlic dip crust'], 'SPECIAL', 1600, 0, false],
 ];
 
-const menu = MENU.map(([id, name, toppings, category, basePrice, heat, vegetarian]) => ({ id, name, toppings, category, basePrice, heat, vegetarian }));
+const menu = MENU.map(([id, name, toppings, category, basePrice, heat, vegetarian]) => ({
+  id,
+  name,
+  toppings,
+  category,
+  basePrice,
+  heat,
+  vegetarian,
+}));
 if (STRESS) {
   const cats = ['CLASSIC', 'VEGGIE', 'SPICY', 'SPECIAL'];
   for (let i = 0; i < 186; i++) {
@@ -100,7 +128,15 @@ const menuById = new Map(menu.map((p) => [p.id, p]));
 const stock = new Map(
   menu.map((p, i) => {
     const capacity = 20 + ((i * 7) % 21);
-    return [p.id, { pizzaId: p.id, portions: i === 5 ? 2 : i === 12 ? 0 : Math.round(capacity * (0.4 + ((i * 13) % 60) / 100)), capacity, ts: Date.now() }];
+    return [
+      p.id,
+      {
+        pizzaId: p.id,
+        portions: i === 5 ? 2 : i === 12 ? 0 : Math.round(capacity * (0.4 + ((i * 13) % 60) / 100)),
+        capacity,
+        ts: Date.now(),
+      },
+    ];
   }),
 );
 
@@ -141,7 +177,13 @@ function seedHistory(count) {
     const pizza = menu[(i * 5) % Math.min(menu.length, STRESS ? menu.length : 10)];
     const status = statuses[i % statuses.length];
     const fulfilment = i % 3 === 0 ? 'COLLECTION' : 'DELIVERY';
-    const spec = { size: ['S', 'M', 'L'][i % 3], crust: ['CLASSIC', 'THIN', 'STUFFED'][(i * 2) % 3], quantity: 1 + (i % 4), fulfilment, tipPercent: [0, 10, 15, 20][i % 4] };
+    const spec = {
+      size: ['S', 'M', 'L'][i % 3],
+      crust: ['CLASSIC', 'THIN', 'STUFFED'][(i * 2) % 3],
+      quantity: 1 + (i % 4),
+      fulfilment,
+      tipPercent: [0, 10, 15, 20][i % 4],
+    };
     const createdAt = now - (count - i) * 4 * 60_000;
     const order = {
       id: randomUUID(),
@@ -158,7 +200,14 @@ function seedHistory(count) {
       ...(status === 'REJECTED' ? { rejectReason: 'Sold out' } : {}),
     };
     orders.set(order.id, order);
-    activity.push({ id: randomUUID(), orderId: order.id, ticket: order.ticket, kind: status, message: messageFor(order, status), ts: order.updatedAt });
+    activity.push({
+      id: randomUUID(),
+      orderId: order.id,
+      ticket: order.ticket,
+      kind: status,
+      message: messageFor(order, status),
+      ts: order.updatedAt,
+    });
   }
 }
 
@@ -173,7 +222,9 @@ function messageFor(order, kind, driver) {
     case 'ON_THE_WAY':
       return `${driver?.name ?? 'A driver'} is taking ${what} to ${order.postcode}`;
     case 'DONE':
-      return order.fulfilment === 'DELIVERY' ? `${what} delivered to ${order.customer}` : `${order.customer} collected ${what}`;
+      return order.fulfilment === 'DELIVERY'
+        ? `${what} delivered to ${order.customer}`
+        : `${order.customer} collected ${what}`;
     case 'CANCELLED':
       return `${what} for ${order.customer} was cancelled`;
     case 'REJECTED':
@@ -190,7 +241,8 @@ function validateOrder(body) {
   if (!['S', 'M', 'L'].includes(body?.size)) errors.size = 'Size must be S, M or L';
   if (!['CLASSIC', 'THIN', 'STUFFED'].includes(body?.crust)) errors.crust = 'Unknown crust';
   if (![0, 10, 15, 20].includes(body?.tipPercent)) errors.tipPercent = 'Tip must be 0, 10, 15 or 20';
-  if (!Number.isInteger(body?.quantity) || body.quantity < 1) errors.quantity = 'Quantity must be a whole number of at least 1';
+  if (!Number.isInteger(body?.quantity) || body.quantity < 1)
+    errors.quantity = 'Quantity must be a whole number of at least 1';
   else if (body.quantity > MAX_PER_ORDER) errors.quantity = `Max ${MAX_PER_ORDER} pizzas per order`;
   if (body?.fulfilment === 'DELIVERY') {
     const pc = normalisePostcode(body.postcode);
@@ -213,7 +265,14 @@ function broadcast(event) {
 }
 
 function log(order, kind, driver) {
-  const entry = { id: randomUUID(), orderId: order.id, ticket: order.ticket, kind, message: messageFor(order, kind, driver), ts: Date.now() };
+  const entry = {
+    id: randomUUID(),
+    orderId: order.id,
+    ticket: order.ticket,
+    kind,
+    message: messageFor(order, kind, driver),
+    ts: Date.now(),
+  };
   activity.push(entry);
   broadcast({ type: 'activity', activity: entry });
 }
@@ -267,11 +326,18 @@ function tick() {
     } else if (order.status === 'ON_THE_WAY' && now >= order.etaAt) {
       updateOrder(order, { status: 'DONE', etaAt: undefined });
       const driver = drivers.get(order.driverId);
-      if (driver) updateDriver(driver, { status: 'RETURNING', orderId: undefined, etaAt: now + secs(6), deliveriesToday: driver.deliveriesToday + 1 });
+      if (driver)
+        updateDriver(driver, {
+          status: 'RETURNING',
+          orderId: undefined,
+          etaAt: now + secs(6),
+          deliveriesToday: driver.deliveriesToday + 1,
+        });
     }
   }
   for (const driver of drivers.values()) {
-    if (driver.status === 'RETURNING' && now >= driver.etaAt) updateDriver(driver, { status: 'IDLE', etaAt: undefined });
+    if (driver.status === 'RETURNING' && now >= driver.etaAt)
+      updateDriver(driver, { status: 'IDLE', etaAt: undefined });
   }
 }
 
@@ -335,12 +401,18 @@ const server = http.createServer(async (req, res) => {
   if (path === '/api/favourites' && method === 'PUT') {
     const body = await readJson(req);
     const ids = body?.pizzaIds;
-    if (!Array.isArray(ids) || ids.some((id) => !menuById.has(id))) return send(res, 422, { error: 'pizzaIds must be an array of known pizza ids' });
+    if (!Array.isArray(ids) || ids.some((id) => !menuById.has(id)))
+      return send(res, 422, { error: 'pizzaIds must be an array of known pizza ids' });
     favourites = [...new Set(ids)];
     return send(res, 200, { pizzaIds: favourites });
   }
 
-  if (path === '/api/orders' && method === 'GET') return send(res, 200, [...orders.values()].sort((a, b) => b.createdAt - a.createdAt));
+  if (path === '/api/orders' && method === 'GET')
+    return send(
+      res,
+      200,
+      [...orders.values()].sort((a, b) => b.createdAt - a.createdAt),
+    );
 
   if (path === '/api/orders' && method === 'POST') {
     const body = await readJson(req);
@@ -388,7 +460,12 @@ const server = http.createServer(async (req, res) => {
     const order = orders.get(cancel[1]);
     if (!order) return send(res, 404, { error: 'Order not found' });
     if (order.status !== 'QUEUED' && order.status !== 'IN_OVEN') {
-      return send(res, 409, { error: order.status === 'ON_THE_WAY' ? 'Too late - it is already on the way!' : `Cannot cancel an order that is ${order.status}` });
+      return send(res, 409, {
+        error:
+          order.status === 'ON_THE_WAY'
+            ? 'Too late - it is already on the way!'
+            : `Cannot cancel an order that is ${order.status}`,
+      });
     }
     // Pizzas that never reached the oven go back into stock
     if (order.status === 'QUEUED') {
@@ -405,5 +482,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Slice Rush kitchen API on http://localhost:${PORT}  (stress=${STRESS}, tick=${TICK_MS}ms, speed=${SPEED}, failRate=${FAIL_RATE})`);
+  console.log(
+    `Slice Rush kitchen API on http://localhost:${PORT}  (stress=${STRESS}, tick=${TICK_MS}ms, speed=${SPEED}, failRate=${FAIL_RATE})`,
+  );
 });

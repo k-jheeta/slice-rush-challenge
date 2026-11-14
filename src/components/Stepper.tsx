@@ -20,7 +20,12 @@ export function Stepper({ label, defaultValue, min = 1, max = 99, error }: Stepp
         {label}
       </label>
       <div className="stepper-control">
-        <button type="button" className="stepper-btn" aria-label={`Decrease ${label.toLowerCase()}`} disabled={parsed <= min}>
+        <button
+          type="button"
+          className="stepper-btn"
+          aria-label={`Decrease ${label.toLowerCase()}`}
+          disabled={parsed <= min}
+        >
           <MinusIcon size={14} />
         </button>
         <input
@@ -32,7 +37,12 @@ export function Stepper({ label, defaultValue, min = 1, max = 99, error }: Stepp
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
         />
-        <button type="button" className="stepper-btn" aria-label={`Increase ${label.toLowerCase()}`} disabled={parsed >= max}>
+        <button
+          type="button"
+          className="stepper-btn"
+          aria-label={`Increase ${label.toLowerCase()}`}
+          disabled={parsed >= max}
+        >
           <PlusIcon size={14} />
         </button>
       </div>

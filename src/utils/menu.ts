@@ -1,6 +1,10 @@
 import type { Category, Pizza } from '../types';
 
-const words = (text: string) => text.toLocaleLowerCase().split(/[\s'\-.&,]+/).filter(Boolean);
+const words = (text: string) =>
+  text
+    .toLocaleLowerCase()
+    .split(/[\s'\-.&,]+/)
+    .filter(Boolean);
 
 /**
  * How well a pizza matches a search query (case-insensitive, trimmed):

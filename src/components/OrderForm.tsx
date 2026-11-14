@@ -45,7 +45,16 @@ export interface OrderFormProps {
   confirming?: boolean;
 }
 
-export function OrderForm({ pizza, level, fields, quote, sizePrices, errors = {}, submitting = false, confirming = false }: OrderFormProps) {
+export function OrderForm({
+  pizza,
+  level,
+  fields,
+  quote,
+  sizePrices,
+  errors = {},
+  submitting = false,
+  confirming = false,
+}: OrderFormProps) {
   const delivery = fields.fulfilment === 'DELIVERY';
   const soldOut = stockState(level) === 'out';
   const qty = Number(fields.quantity) || 0;
@@ -64,22 +73,38 @@ export function OrderForm({ pizza, level, fields, quote, sizePrices, errors = {}
           </p>
           <p className="order-pizza-toppings">{pizza.toppings.join(', ')}</p>
         </div>
-        <span className={`order-stock${soldOut ? ' is-out' : ''}`}>{soldOut ? 'Sold out' : `${level?.portions} left`}</span>
+        <span className={`order-stock${soldOut ? ' is-out' : ''}`}>
+          {soldOut ? 'Sold out' : `${level?.portions} left`}
+        </span>
       </div>
 
       <form className="order-fields" noValidate>
-        <TextField label="Customer" kind="text" placeholder="Who's it for?" autoComplete="off" defaultValue={fields.customer} error={errors.customer} />
+        <TextField
+          label="Customer"
+          kind="text"
+          placeholder="Who's it for?"
+          autoComplete="off"
+          defaultValue={fields.customer}
+          error={errors.customer}
+        />
 
         <SegmentedControl<Size>
           label="Size"
-          options={(['S', 'M', 'L'] as const).map((s) => ({ value: s, label: SIZE_LABEL[s], hint: formatMoney(sizePrices[s]) }))}
+          options={(['S', 'M', 'L'] as const).map((s) => ({
+            value: s,
+            label: SIZE_LABEL[s],
+            hint: formatMoney(sizePrices[s]),
+          }))}
           value={fields.size}
         />
 
         <SegmentedControl<Crust>
           label="Crust"
           size="sm"
-          options={(['CLASSIC', 'THIN', 'STUFFED'] as const).map((c) => ({ value: c, label: c === 'STUFFED' ? 'Stuffed +£2' : CRUST_LABEL[c] }))}
+          options={(['CLASSIC', 'THIN', 'STUFFED'] as const).map((c) => ({
+            value: c,
+            label: c === 'STUFFED' ? 'Stuffed +£2' : CRUST_LABEL[c],
+          }))}
           value={fields.crust}
         />
 
@@ -130,7 +155,9 @@ export function OrderForm({ pizza, level, fields, quote, sizePrices, errors = {}
             <span>Total</span>
             <span className="num">{formatMoney(quote.total)}</span>
           </div>
-          {quote.deliveryFee > 0 && qty > 0 && <p className="receipt-hint">Add {formatMoney(2500 - quote.food)} more for free delivery</p>}
+          {quote.deliveryFee > 0 && qty > 0 && (
+            <p className="receipt-hint">Add {formatMoney(2500 - quote.food)} more for free delivery</p>
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary btn-lg" disabled={submitting} aria-busy={submitting}>

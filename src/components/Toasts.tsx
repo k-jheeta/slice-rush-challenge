@@ -26,7 +26,12 @@ export function Toasts({ toasts, onDismiss }: { toasts: Toast[]; onDismiss?: (id
               <p className="toast-title">{t.title}</p>
               {t.message && <p className="toast-message">{t.message}</p>}
             </div>
-            <button type="button" className="icon-btn toast-close" aria-label="Dismiss notification" onClick={() => onDismiss?.(t.id)}>
+            <button
+              type="button"
+              className="icon-btn toast-close"
+              aria-label="Dismiss notification"
+              onClick={() => onDismiss?.(t.id)}
+            >
               <CloseIcon size={12} />
             </button>
             {t.duration > 0 && <span className="toast-timer" style={{ animationDuration: `${t.duration}ms` }} />}

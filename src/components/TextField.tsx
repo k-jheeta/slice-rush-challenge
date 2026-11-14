@@ -10,7 +10,15 @@ export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElemen
   error?: string;
 }
 
-export function TextField({ label, suffix, error, disabled, kind = 'number', className = '', ...inputProps }: TextFieldProps) {
+export function TextField({
+  label,
+  suffix,
+  error,
+  disabled,
+  kind = 'number',
+  className = '',
+  ...inputProps
+}: TextFieldProps) {
   const id = useId();
   const errorId = `${id}-error`;
   return (

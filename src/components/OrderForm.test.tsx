@@ -10,7 +10,15 @@ test('shows the pizza and its stock', () => {
     <OrderForm
       pizza={pizza('margherita')}
       level={STOCK.margherita}
-      fields={{ customer: '', size: 'M', crust: 'CLASSIC', quantity: '1', fulfilment: 'DELIVERY', postcode: '', tipPercent: 10 }}
+      fields={{
+        customer: '',
+        size: 'M',
+        crust: 'CLASSIC',
+        quantity: '1',
+        fulfilment: 'DELIVERY',
+        postcode: '',
+        tipPercent: 10,
+      }}
       quote={{ unit: 950, subtotal: 950, discount: 0, food: 950, deliveryFee: 299, tip: 95, total: 1344 }}
       sizePrices={{ S: 760, M: 950, L: 1240 }}
     />,

@@ -18,8 +18,7 @@ export interface NewOrderRequest {
 }
 
 export type ValidationResult =
-  | { ok: true; request: Omit<NewOrderRequest, 'clientOrderId'>; quote: PriceQuote }
-  | { ok: false; errors: DraftErrors };
+  { ok: true; request: Omit<NewOrderRequest, 'clientOrderId'>; quote: PriceQuote } | { ok: false; errors: DraftErrors };
 
 export const MAX_PER_ORDER = 20;
 

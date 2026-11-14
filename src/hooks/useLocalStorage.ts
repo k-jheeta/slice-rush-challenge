@@ -12,4 +12,3 @@ export function useLocalStorage<T>(key: string, initial: T): [T, (next: T | ((pr
   // TODO: implement (see the doc comment above and the tests)
   throw new Error('Not implemented');
 }
-

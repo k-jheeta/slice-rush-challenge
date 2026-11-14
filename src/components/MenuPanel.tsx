@@ -34,7 +34,16 @@ export interface MenuPanelProps {
   flashes?: Record<string, 'up' | 'down'>;
 }
 
-export function MenuPanel({ menuCount, sections, stock, favouriteIds, selectedId, query = '', category = null, flashes = {} }: MenuPanelProps) {
+export function MenuPanel({
+  menuCount,
+  sections,
+  stock,
+  favouriteIds,
+  selectedId,
+  query = '',
+  category = null,
+  flashes = {},
+}: MenuPanelProps) {
   return (
     <section className="panel menu" aria-label="Pizza menu">
       <header className="panel-header">
@@ -99,7 +108,9 @@ export function MenuRow({ pizza, level, selected, favourite, flash }: MenuRowPro
   const state = stockState(level);
   const fill = level ? Math.min(1, level.portions / level.capacity) : 0;
   return (
-    <li className={`menu-row cat-${pizza.category.toLowerCase()}${selected ? ' selected' : ''}${state === 'out' ? ' sold-out' : ''}`}>
+    <li
+      className={`menu-row cat-${pizza.category.toLowerCase()}${selected ? ' selected' : ''}${state === 'out' ? ' sold-out' : ''}`}
+    >
       <button type="button" className="menu-main" aria-label={pizza.name} aria-current={selected || undefined}>
         <PizzaIcon size={40} />
         <span className="menu-info">

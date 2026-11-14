@@ -7,7 +7,9 @@ export class ApiError extends Error {
   readonly body: unknown;
   constructor(status: number, body: unknown) {
     const message =
-      typeof body === 'object' && body && 'error' in body ? String((body as { error: unknown }).error) : `HTTP ${status}`;
+      typeof body === 'object' && body && 'error' in body
+        ? String((body as { error: unknown }).error)
+        : `HTTP ${status}`;
     super(message);
     this.name = 'ApiError';
     this.status = status;
@@ -41,7 +43,8 @@ export const api = {
   getMenu: (signal?: AbortSignal) => request<Pizza[]>('/api/menu', { signal }),
   getStock: (signal?: AbortSignal) => request<StockLevel[]>('/api/stock', { signal }),
   getFavourites: (signal?: AbortSignal) => request<{ pizzaIds: string[] }>('/api/favourites', { signal }),
-  putFavourites: (pizzaIds: string[]) => request<{ pizzaIds: string[] }>('/api/favourites', { method: 'PUT', json: { pizzaIds } }),
+  putFavourites: (pizzaIds: string[]) =>
+    request<{ pizzaIds: string[] }>('/api/favourites', { method: 'PUT', json: { pizzaIds } }),
   getOrders: (signal?: AbortSignal) => request<Order[]>('/api/orders', { signal }),
   getDrivers: (signal?: AbortSignal) => request<Driver[]>('/api/drivers', { signal }),
   getActivity: (signal?: AbortSignal) => request<Activity[]>('/api/activity', { signal }),

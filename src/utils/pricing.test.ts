@@ -27,7 +27,15 @@ describe('priceOrder', () => {
   const base = { size: 'M', crust: 'CLASSIC', quantity: 1, fulfilment: 'DELIVERY', tipPercent: 0 } as const;
 
   test('a single delivered margherita pays the delivery fee', () => {
-    expect(priceOrder(MARG, base)).toEqual({ unit: 950, subtotal: 950, discount: 0, food: 950, deliveryFee: 299, tip: 0, total: 1249 });
+    expect(priceOrder(MARG, base)).toEqual({
+      unit: 950,
+      subtotal: 950,
+      discount: 0,
+      food: 950,
+      deliveryFee: 299,
+      tip: 0,
+      total: 1249,
+    });
   });
 
   test('collection never has a delivery fee', () => {

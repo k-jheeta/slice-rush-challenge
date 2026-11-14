@@ -42,7 +42,18 @@ export interface KitchenBoardProps {
   sort?: SortSpec<TicketSortKey> | null;
 }
 
-export function KitchenBoard({ tab, orders, cancelling = {}, drivers, activity, menuById, takings, now, filter = 'ALL', sort = null }: KitchenBoardProps) {
+export function KitchenBoard({
+  tab,
+  orders,
+  cancelling = {},
+  drivers,
+  activity,
+  menuById,
+  takings,
+  now,
+  filter = 'ALL',
+  sort = null,
+}: KitchenBoardProps) {
   const active = orders.filter((o) => ACTIVE.has(o.status)).length;
   const out = drivers.filter((d) => d.status === 'DELIVERING').length;
 
@@ -57,7 +68,14 @@ export function KitchenBoard({ tab, orders, cancelling = {}, drivers, activity, 
     <section className="panel board" aria-label="Kitchen board">
       <div className="panel-header board-tabs" role="tablist" aria-label="Kitchen views">
         {tabs.map((t) => (
-          <button key={t.id} role="tab" id={`tab-${t.id}`} aria-selected={tab === t.id} aria-controls={`tabpanel-${t.id}`} className="board-tab">
+          <button
+            key={t.id}
+            role="tab"
+            id={`tab-${t.id}`}
+            aria-selected={tab === t.id}
+            aria-controls={`tabpanel-${t.id}`}
+            className="board-tab"
+          >
             {t.label}
             {t.count !== undefined && <span className="count-badge">{t.count}</span>}
           </button>
@@ -65,7 +83,17 @@ export function KitchenBoard({ tab, orders, cancelling = {}, drivers, activity, 
       </div>
 
       <div className="board-body" role="tabpanel" id={`tabpanel-${tab}`} aria-labelledby={`tab-${tab}`}>
-        {tab === 'tickets' && <TicketsView orders={orders} cancelling={cancelling} drivers={drivers} menuById={menuById} now={now} filter={filter} sort={sort} />}
+        {tab === 'tickets' && (
+          <TicketsView
+            orders={orders}
+            cancelling={cancelling}
+            drivers={drivers}
+            menuById={menuById}
+            now={now}
+            filter={filter}
+            sort={sort}
+          />
+        )}
         {tab === 'drivers' && <DriversView drivers={drivers} orders={orders} now={now} />}
         {tab === 'takings' && <TakingsView takings={takings} menuById={menuById} />}
         {tab === 'activity' && <ActivityView activity={activity} />}
@@ -129,7 +157,14 @@ function TicketsView({ orders, cancelling, drivers, menuById, now, filter, sort 
         </div>
         <div className="table-body" role="rowgroup">
           {visible.length === 0 ? (
-            <EmptyState title={filter === 'ALL' ? 'No tickets yet' : `No ${FILTERS.find((f) => f.value === filter)!.label.toLowerCase()} tickets`} message="Orders you send to the kitchen appear here." />
+            <EmptyState
+              title={
+                filter === 'ALL'
+                  ? 'No tickets yet'
+                  : `No ${FILTERS.find((f) => f.value === filter)!.label.toLowerCase()} tickets`
+              }
+              message="Orders you send to the kitchen appear here."
+            />
           ) : (
             visible.map((order) => (
               <TicketRow
@@ -158,7 +193,11 @@ interface SortHeaderProps<K extends string> {
 function SortHeader<K extends string>({ k, label, sort, className }: SortHeaderProps<K>) {
   const active = sort?.key === k ? sort.direction : null;
   return (
-    <div className={`th ${className}`} role="columnheader" aria-sort={active === 'asc' ? 'ascending' : active === 'desc' ? 'descending' : 'none'}>
+    <div
+      className={`th ${className}`}
+      role="columnheader"
+      aria-sort={active === 'asc' ? 'ascending' : active === 'desc' ? 'descending' : 'none'}
+    >
       <button type="button" className={`sort-button${active ? ' active' : ''}`} data-key={k}>
         {label}
         {active === 'asc' && <ArrowUpIcon size={12} />}
@@ -186,7 +225,11 @@ function TicketRow({ order, pizza, driverName, cancelling, now }: TicketRowProps
       <div className="td col-customer stack" role="cell">
         <span className="strong ellipsis">{order.customer}</span>
         <span className="sub ellipsis">
-          {order.fulfilment === 'DELIVERY' ? (driverName ? `${order.postcode} · ${driverName}` : order.postcode) : 'Collection'}
+          {order.fulfilment === 'DELIVERY'
+            ? driverName
+              ? `${order.postcode} · ${driverName}`
+              : order.postcode
+            : 'Collection'}
         </span>
       </div>
       <div className="td col-pizza stack" role="cell">
@@ -203,7 +246,11 @@ function TicketRow({ order, pizza, driverName, cancelling, now }: TicketRowProps
         <StageTrack order={order} />
       </div>
       <div className="td col-eta right" role="cell">
-        {order.etaAt !== undefined && ACTIVE.has(order.status) ? <Eta etaAt={order.etaAt} now={now} /> : <span className="muted">–</span>}
+        {order.etaAt !== undefined && ACTIVE.has(order.status) ? (
+          <Eta etaAt={order.etaAt} now={now} />
+        ) : (
+          <span className="muted">–</span>
+        )}
       </div>
       <div className="td col-total num right" role="cell">
         {formatMoney(order.total)}
@@ -216,7 +263,11 @@ function TicketRow({ order, pizza, driverName, cancelling, now }: TicketRowProps
           (cancelling ? (
             <span className="spinner row-spinner" aria-label="Cancelling" />
           ) : (
-            <button type="button" className="icon-btn row-cancel" aria-label={`Cancel ticket ${formatTicket(order.ticket)}`}>
+            <button
+              type="button"
+              className="icon-btn row-cancel"
+              aria-label={`Cancel ticket ${formatTicket(order.ticket)}`}
+            >
               <CloseIcon size={14} />
             </button>
           ))}
@@ -227,7 +278,8 @@ function TicketRow({ order, pizza, driverName, cancelling, now }: TicketRowProps
 
 /** Progress through the kitchen as a row of segments. Collection orders skip the "road" step. */
 export function StageTrack({ order }: { order: Order }) {
-  const steps = order.fulfilment === 'DELIVERY' ? ['Queued', 'Oven', 'On the road', 'Done'] : ['Queued', 'Oven', 'Done'];
+  const steps =
+    order.fulfilment === 'DELIVERY' ? ['Queued', 'Oven', 'On the road', 'Done'] : ['Queued', 'Oven', 'Done'];
   const position: Partial<Record<OrderStatus, number>> = {
     PENDING: 0,
     QUEUED: 0,
@@ -256,7 +308,9 @@ export function StageTrack({ order }: { order: Order }) {
 /** Countdown to etaAt. Part 3/4: make it tick live without re-rendering the whole board every second. */
 export function Eta({ etaAt, now }: { etaAt: number; now: number }) {
   const text = formatEta(etaAt, now);
-  return <span className={`eta num${text.startsWith('+') ? ' is-late' : text === 'Due' ? ' is-due' : ''}`}>{text}</span>;
+  return (
+    <span className={`eta num${text.startsWith('+') ? ' is-late' : text === 'Due' ? ' is-due' : ''}`}>{text}</span>
+  );
 }
 
 function EmptyState({ title, message }: { title: string; message: string }) {
@@ -282,9 +336,12 @@ const VEHICLE: Record<Vehicle, { icon: typeof BikeIcon; label: string }> = {
 };
 
 function DriversView({ drivers, orders, now }: { drivers: Driver[]; orders: Order[]; now: number }) {
-  const sorted = [...drivers].sort((a, b) => DRIVER_ORDER[a.status] - DRIVER_ORDER[b.status] || a.name.localeCompare(b.name));
+  const sorted = [...drivers].sort(
+    (a, b) => DRIVER_ORDER[a.status] - DRIVER_ORDER[b.status] || a.name.localeCompare(b.name),
+  );
   const byId = new Map(orders.map((o) => [o.id, o]));
-  if (sorted.length === 0) return <EmptyState title="No drivers on shift" message="Drivers appear here when they clock in." />;
+  if (sorted.length === 0)
+    return <EmptyState title="No drivers on shift" message="Drivers appear here when they clock in." />;
   return (
     <ul className="driver-grid" aria-label="Drivers">
       {sorted.map((d) => (
@@ -315,7 +372,8 @@ function DriverCard({ driver, order, now }: { driver: Driver; order: Order | und
         {driver.status === 'DELIVERING' && order ? (
           <>
             <span className="driver-job-text">
-              <span className="num strong">{formatTicket(order.ticket)}</span> → <span className="num">{order.postcode}</span>
+              <span className="num strong">{formatTicket(order.ticket)}</span> →{' '}
+              <span className="num">{order.postcode}</span>
             </span>
             {driver.etaAt !== undefined && <Eta etaAt={driver.etaAt} now={now} />}
           </>
@@ -342,20 +400,39 @@ function DriverCard({ driver, order, now }: { driver: Driver; order: Order | und
 
 function TakingsView({ takings: rows, menuById }: { takings: TakingsRow[]; menuById: Map<string, Pizza> }) {
   const total = rows.reduce(
-    (t, r) => ({ sold: t.sold + r.sold, revenue: t.revenue + r.revenue, tips: t.tips + r.tips, waste: t.waste + r.waste, net: t.net + r.net }),
+    (t, r) => ({
+      sold: t.sold + r.sold,
+      revenue: t.revenue + r.revenue,
+      tips: t.tips + r.tips,
+      waste: t.waste + r.waste,
+      net: t.net + r.net,
+    }),
     { sold: 0, revenue: 0, tips: 0, waste: 0, net: 0 },
   );
-  if (rows.length === 0) return <EmptyState title="Nothing sold yet" message="Takings appear once orders are delivered or collected." />;
+  if (rows.length === 0)
+    return <EmptyState title="Nothing sold yet" message="Takings appear once orders are delivered or collected." />;
   return (
     <div className="table takings-table" role="table" aria-label="Takings">
       <div className="table-head" role="rowgroup">
         <div className="tr" role="row">
-          <div className="th col-name" role="columnheader">Pizza</div>
-          <div className="th col-num right" role="columnheader">Sold</div>
-          <div className="th col-money right" role="columnheader">Revenue</div>
-          <div className="th col-money right" role="columnheader">Tips</div>
-          <div className="th col-money right" role="columnheader">Waste</div>
-          <div className="th col-money right" role="columnheader">Net</div>
+          <div className="th col-name" role="columnheader">
+            Pizza
+          </div>
+          <div className="th col-num right" role="columnheader">
+            Sold
+          </div>
+          <div className="th col-money right" role="columnheader">
+            Revenue
+          </div>
+          <div className="th col-money right" role="columnheader">
+            Tips
+          </div>
+          <div className="th col-money right" role="columnheader">
+            Waste
+          </div>
+          <div className="th col-money right" role="columnheader">
+            Net
+          </div>
         </div>
       </div>
       <div className="table-body" role="rowgroup">
@@ -367,23 +444,45 @@ function TakingsView({ takings: rows, menuById }: { takings: TakingsRow[]; menuB
                 <PizzaIcon size={24} />
                 <span className="strong ellipsis">{pizza.name}</span>
               </div>
-              <div className="td col-num num right" role="cell">{r.sold}</div>
-              <div className="td col-money num right" role="cell">{formatMoney(r.revenue)}</div>
-              <div className="td col-money num right" role="cell">{formatMoney(r.tips)}</div>
-              <div className={`td col-money num right${r.waste ? ' waste' : ' muted'}`} role="cell">{r.waste ? `-${formatMoney(r.waste)}` : '–'}</div>
-              <div className={`td col-money num right strong${r.net < 0 ? ' waste' : ''}`} role="cell">{formatMoney(r.net)}</div>
+              <div className="td col-num num right" role="cell">
+                {r.sold}
+              </div>
+              <div className="td col-money num right" role="cell">
+                {formatMoney(r.revenue)}
+              </div>
+              <div className="td col-money num right" role="cell">
+                {formatMoney(r.tips)}
+              </div>
+              <div className={`td col-money num right${r.waste ? ' waste' : ' muted'}`} role="cell">
+                {r.waste ? `-${formatMoney(r.waste)}` : '–'}
+              </div>
+              <div className={`td col-money num right strong${r.net < 0 ? ' waste' : ''}`} role="cell">
+                {formatMoney(r.net)}
+              </div>
             </div>
           );
         })}
       </div>
       <div className="table-foot" role="rowgroup">
         <div className="tr" role="row">
-          <div className="td col-name strong" role="cell">Total today</div>
-          <div className="td col-num num right strong" role="cell">{total.sold}</div>
-          <div className="td col-money num right" role="cell">{formatMoney(total.revenue)}</div>
-          <div className="td col-money num right" role="cell">{formatMoney(total.tips)}</div>
-          <div className="td col-money num right waste" role="cell">{total.waste ? `-${formatMoney(total.waste)}` : '–'}</div>
-          <div className="td col-money num right net-total" role="cell">{formatMoney(total.net)}</div>
+          <div className="td col-name strong" role="cell">
+            Total today
+          </div>
+          <div className="td col-num num right strong" role="cell">
+            {total.sold}
+          </div>
+          <div className="td col-money num right" role="cell">
+            {formatMoney(total.revenue)}
+          </div>
+          <div className="td col-money num right" role="cell">
+            {formatMoney(total.tips)}
+          </div>
+          <div className="td col-money num right waste" role="cell">
+            {total.waste ? `-${formatMoney(total.waste)}` : '–'}
+          </div>
+          <div className="td col-money num right net-total" role="cell">
+            {formatMoney(total.net)}
+          </div>
         </div>
       </div>
     </div>

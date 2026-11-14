@@ -5,8 +5,10 @@ import { FAVOURITE_IDS, MENU, pizza } from '../__test__/fixtures';
 const names = (list: { name: string }[]) => list.map((p) => p.name);
 
 describe('scorePizza', () => {
-  test('exact name, ignoring case and whitespace', () => expect(scorePizza(pizza('margherita'), '  MARGHERITA ')).toBe(4));
-  test('exact name ignores a leading apostrophe', () => expect(scorePizza(pizza('nduja-ninja'), 'nduja ninja')).toBe(4));
+  test('exact name, ignoring case and whitespace', () =>
+    expect(scorePizza(pizza('margherita'), '  MARGHERITA ')).toBe(4));
+  test('exact name ignores a leading apostrophe', () =>
+    expect(scorePizza(pizza('nduja-ninja'), 'nduja ninja')).toBe(4));
   test('name prefix', () => expect(scorePizza(pizza('pepperoni-party'), 'pepp')).toBe(3));
   test('word prefix in the name', () => expect(scorePizza(pizza('hot-honey'), 'honey')).toBe(2));
   test('hyphenated names split into words', () => expect(scorePizza(pizza('fun-ghi'), 'ghi')).toBe(2));
