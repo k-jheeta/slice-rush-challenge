@@ -33,13 +33,15 @@ jobs:
         continue-on-error: true # remove once Part 2 is done
 
 
-  # Add in part 2 when tests are ready
   # tag:
   #   needs: check
   #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
   #   runs-on: ubuntu-latest
   #   permissions:
   #     contents: write
+  #   concurrency:
+  #     group: tag-main
+  #     cancel-in-progress: false
 
   #   steps:
   #     - name: Check out code
@@ -47,7 +49,7 @@ jobs:
 
   #     - name: Create and push tag
   #       run: |
-  #         TAG="$(date -u +%Y%m%d%H%M%S%3NZ)"
+  #         TAG="$(date -u +%Y%m%d%H%M%S%3N)"
   #         echo "Tagging $GITHUB_SHA as $TAG"
   #         git tag "$TAG"
   #         git push origin "$TAG"
